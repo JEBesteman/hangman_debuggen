@@ -17,7 +17,9 @@ const GameOver = props => {
       <p>The chosen word was: {props.chosenWord}</p>
     </div>
   );
-
+  console.log("woord geraden", props.wordGuessed); //undefined
+  console.log("woord geraden", props.wordGuesed); //true
+  
   return props.wordGuessed ? winResult : loseResult;
 };
 
