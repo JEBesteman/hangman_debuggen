@@ -8,7 +8,7 @@ const wordList = [
   "telefoon",
   "moeder",
   "snoer",
-  "geeuw"
+  "geeuw",
 ];
 
 const maxGuesses = 5;
@@ -18,7 +18,7 @@ class AppContainer extends React.Component {
     chosenWord: "",
     guessedLetters: [],
     currentChosenLetter: "",
-    maxGuesses: maxGuesses
+    maxGuesses: maxGuesses,
   };
 
   chooseWord(list) {
@@ -27,26 +27,35 @@ class AppContainer extends React.Component {
     return list[index];
   }
 
-  restartGameHandler = event => {
+  restartGameHandler = (event) => {
     this.setState({
       chosenWord: this.chooseWord(wordList),
       guessedLetters: [],
-      currentChosenLetter: ""
+      currentChosenLetter: "",
     });
   };
 
-  chosenLetterHandler = event => {
+  chosenLetterHandler = (event) => {
     const newState = { ...this.state };
     newState.currentChosenLetter = event.target.value;
     this.setState(newState);
   };
 
-  guessLetterHandler = event => {
-    const newGuessedLetters = [...this.state.guessedLetters];
-    newGuessedLetters.push(this.state.currentChosenLetter);
+  guessLetterHandler = (event) => {
+    const inputGiven = this.state.currentChosenLetter.length > 0; //checks if textInput is not empty
+    const newLetter = !this.state.guessedLetters.includes(
+      this.state.currentChosenLetter
+    );
+    if (inputGiven && newLetter) {
+      const newGuessedLetters = [...this.state.guessedLetters];
+      newGuessedLetters.push(this.state.currentChosenLetter);
+      this.setState({
+        guessedLetters: newGuessedLetters,
+        currentChosenLetter: "",
+      });
+    } //else
     this.setState({
-      guessedLetters: newGuessedLetters,
-      currentChosenLetter: ""
+      currentChosenLetter: "",
     });
     event.preventDefault();
   };
